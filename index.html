@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Learning how to use react</title>
 </head>
 <body>
+    <h1>This is a page with all my notes</h1>
 
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <div id="app"></div>
+
+    <script type="text/jsx">
+        const app = document.getElementById('app')
+
+        function NoteText({text}) {
+            return (
+                <a className="note_body">{text}</a>
+            )
+        }
+
+        function NoteCard({text}) {
+            return (
+                <div className="notes_element">
+                    <a className="date">17th May 2023 - 05h36</a>
+                    <NoteText text={text ? text : "default"}/>
+                </div>
+            )
+        }
+
+        function NotesList() {
+            const messages = ["hello", "world", "!!!"];
+
+            return (
+                <div id="notes_list">
+                    {messages.map((note_text) => (
+                        <NoteCard key={note_text} text={note_text} />
+                    ))}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<NotesList />, app)
+    </script>
+
+    <div id="input_field">
+        <label>
+            <input type="text">
+        </label>
+        <button id="post">Post new Note</button>
+    </div>
 </body>
 </html>

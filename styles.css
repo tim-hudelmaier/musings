@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+body {
+    font-family: 'PT Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+#feed {
+    max-width: 800px;
+    width: 100%;
+    overflow-y: scroll;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 0 20px;  /* Added horizontal padding */
+    margin: 0 0 75px;
+}
+
+.note {
+    width: fit-content;
+    max-width: 90%;
+    background-color: #eeeeee;
+    padding: 0 15px;  /* Increased padding */
+    border-radius: 10px;  /* Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.note-metadata .date {
+    color: #aaa;  /* Dark grey color */
+    font-size: 0.7em;  /* Smaller font size */
+}
+
+.note-text {
+    line-height: 1.6;
+    margin-top: -10px;  /* Added space between the date and text */
+    text-align: justify;
+}
+
+#input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: fixed;  /* Changed from sticky to fixed */
+    bottom: 20px;  /* Add white space at the bottom */
+    background-color: white;
+    width: calc(100% - 40px);  /* Subtract left and right margin */
+    max-width: 800px;  /* Same as #feed's max-width */
+    left: 50%;  /* Center the div */
+    transform: translateX(-50%);  /* Center the div */
+    padding: 10px 10px;  /* Add padding on top and bottom */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Optional: Add shadow for a lifting effect */
+    border-radius: 10px;  /* Optional: Round the corners */
+}
+
+input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
