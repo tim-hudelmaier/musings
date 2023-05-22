@@ -21,12 +21,9 @@ function NoteCard ( {note_information} ) {
 
 export default function Feed () {
 
-    const [inputValue, setInputValue] = React.useState('');
+    const [inputValue, setInputValue] = useState('');
 
-    const [list, setList] = React.useState(() => {
-        const savedNotes = localStorage.getItem('notes');
-        return savedNotes ? JSON.parse(savedNotes) : [];
-    });
+    const [list, setList] = useState([]);
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -47,11 +44,8 @@ export default function Feed () {
             note: inputValue
         };
 
-        setList(prevList => {
-            const newList = [...prevList, newItem];
-            localStorage.setItem('notes', JSON.stringify(newList));
-            return newList;
-        });
+        setList(prevList => [...prevList, newItem]);
+
         setInputValue('');
     }
 
