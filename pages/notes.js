@@ -19,7 +19,7 @@ function NoteCard ( {note_information} ) {
     )
 }
 
-function Feed () {
+export default function Feed () {
 
     const [inputValue, setInputValue] = React.useState('');
 
@@ -65,13 +65,5 @@ function Feed () {
                 <button onClick={handleSubmit} id="post">Post Note</button>
             </div>
         </>
-    )
-}
-
-function App () {
-    return (
-        <div>
-            <Feed />
-        </div>
     )
 }
