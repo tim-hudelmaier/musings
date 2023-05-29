@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -29,7 +29,7 @@ export default function Feed () {
         setInputValue(event.target.value);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newItem = {
@@ -46,10 +46,26 @@ export default function Feed () {
 
         setList(prevList => [...prevList, newItem]);
 
+        await fetch('/api/notes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newItem),
+        });
+
         setInputValue('');
-    }
+    };
 
     const notes_list = list.map(note => <NoteCard key={note.uuid} note_information={note}/> )
+
+    // Load notes on initial render
+    useEffect(() => {
+        fetch('/api/get-notes')
+            .then(response => response.json())
+            .then(notes => setList(notes))
+            .catch(error => console.error('Error:', error));
+    }, []);
 
     return (
         <>
