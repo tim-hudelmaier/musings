@@ -21,7 +21,7 @@ function NoteCard ( {note_information} ) {
 }
 
 function Feed () {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const user_id = session?.user?.email
 
     const [inputValue, setInputValue] = useState('');
@@ -83,7 +83,7 @@ function Feed () {
 }
 
 export default function Notes() {
-    const { data: session, status } = useSession()
+    const { status } = useSession()
 
     if (status === "loading") {
         return <p>Loading...</p>
