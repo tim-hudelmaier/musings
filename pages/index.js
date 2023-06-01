@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -19,7 +20,9 @@ function NoteCard ( {note_information} ) {
     )
 }
 
-export default function Feed () {
+function Feed () {
+    const { data: session, status } = useSession()
+    const user_id = session?.user?.email
 
     const [inputValue, setInputValue] = useState('');
 
@@ -41,7 +44,8 @@ export default function Feed () {
                 hour: "2-digit",
                 minute: "2-digit",
             }),
-            note: inputValue
+            note: inputValue,
+            user_id: user_id,
         };
 
         setList(prevList => [...prevList, newItem]);
@@ -74,6 +78,28 @@ export default function Feed () {
                 <input type="text" value={inputValue} onChange={handleChange}/>
                 <button onClick={handleSubmit} id="post">Post Note</button>
             </div>
+        </>
+    )
+}
+
+export default function Notes() {
+    const { data: session, status } = useSession()
+
+    if (status === "loading") {
+        return <p>Loading...</p>
+    }
+    if (status === "authenticated") {
+        return (
+            <>
+                <Feed />
+                <button onClick={() => signOut()}>Sign out</button>
+            </>
+        )
+    }
+    return (
+        <>
+            <p>Please Login</p>
+            <button onClick={() => signIn()}>Sign in</button>
         </>
     )
 }
