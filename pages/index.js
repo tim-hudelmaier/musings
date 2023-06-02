@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { getSession } from 'next-auth/react'
 
 function uuidv4() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -20,7 +21,7 @@ function NoteCard ( {note_information} ) {
     )
 }
 
-function Feed () {
+export default function Feed () {
     const { data: session } = useSession()
     const user_id = session?.user?.email
 
@@ -82,30 +83,25 @@ function Feed () {
             <div id="input">
                 <input type="text" value={inputValue} onChange={handleChange}/>
                 <button onClick={handleSubmit} id="post">Post Note</button>
+                <button onClick={() => signOut()}>Sign out</button>
             </div>
             <div ref={endOfNotes} />
         </>
     )
 }
 
-export default function Notes() {
-    const { status } = useSession()
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/auth/signin",
+            },
+        };
+    }
 
-    if (status === "loading") {
-        return <p>Loading...</p>
-    }
-    if (status === "authenticated") {
-        return (
-            <>
-                <Feed />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        )
-    }
-    return (
-        <>
-            <p>Please Login</p>
-            <button onClick={() => signIn()}>Sign in</button>
-        </>
-    )
+    return {
+        props: {},
+    };
 }
