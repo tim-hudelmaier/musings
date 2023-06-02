@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react";
 
 function uuidv4() {
@@ -27,6 +27,7 @@ function Feed () {
     const [inputValue, setInputValue] = useState('');
 
     const [list, setList] = useState([]);
+    const endOfNotes = useRef(null);
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -71,6 +72,10 @@ function Feed () {
             .catch(error => console.error('Error:', error));
     }, []);
 
+    useEffect(() => {
+        endOfNotes.current?.scrollIntoView({ behavior: "smooth" });
+    }, [list]);
+
     return (
         <>
             <div id="feed">{notes_list}</div>
@@ -78,6 +83,7 @@ function Feed () {
                 <input type="text" value={inputValue} onChange={handleChange}/>
                 <button onClick={handleSubmit} id="post">Post Note</button>
             </div>
+            <div ref={endOfNotes} />
         </>
     )
 }
