@@ -8,6 +8,7 @@ body {
     margin: 10px;
     min-height: 100vh;
     background-color: #f8f9fa;
+    font-size: 14px;
 }
 
 #feed {

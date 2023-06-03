@@ -37,6 +37,10 @@ export default function Feed () {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (inputValue === '') {
+            return;
+        }
+
         const newItem = {
             uuid: uuidv4(),
             date: new Date().toLocaleString("en-GB", {
@@ -80,10 +84,12 @@ export default function Feed () {
     return (
         <>
             <div id="feed">{notes_list}</div>
-            <div id="input">
-                <input type="text" value={inputValue} onChange={handleChange}/>
-                <button onClick={handleSubmit} id="post">Post Note</button>
-                <button onClick={() => signOut()}>Sign out</button>
+            <div>
+                <form id="input" onSubmit={handleSubmit}>
+                    <input type="text" value={inputValue} onChange={handleChange}/>
+                    <button type="submit" id="post">Post Note</button>
+                    <button onClick={() => signOut()}>Sign out</button>
+                </form>
             </div>
             <div ref={endOfNotes} />
         </>
