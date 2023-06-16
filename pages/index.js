@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef, forwardRef } from 'react';
-import { useSession, signOut } from "next-auth/react";
-import { getSession } from 'next-auth/react'
+import {useState, useEffect, useRef, forwardRef} from 'react';
+import {useSession, signOut} from "next-auth/react";
+import {getSession} from 'next-auth/react'
 
 function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
 }
 
-function NoteCard ( {note_information} ) {
+function NoteCard({note_information}) {
     return (
         <div className="note">
             <div className="note-metadata">
@@ -21,8 +21,8 @@ function NoteCard ( {note_information} ) {
     )
 }
 
-export default function Feed () {
-    const { data: session } = useSession()
+export default function Feed() {
+    const {data: session} = useSession()
     const user_id = session?.user?.email
 
     const [showProfileCard, setShowProfileCard] = useState(false);
@@ -84,14 +84,24 @@ export default function Feed () {
         setInputValue('');
     };
 
-    const notes_list = list.map(note => <NoteCard key={note.uuid} note_information={note}/> )
+    const notes_list = list.map(note => <NoteCard key={note.uuid} note_information={note}/>)
 
     function ProfilePicButton({onClick}) {
         return (
             <button
                 onClick={onClick}
-                style={{ position: "fixed", bottom: "30px", left: "30px", padding: "0", borderRadius: "50%", width: "50px", height: "50px", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)" }}>
-                <img src="/profile_pic.png" alt="A profile picture" style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
+                style={{
+                    position: "fixed",
+                    bottom: "30px",
+                    left: "30px",
+                    padding: "0",
+                    borderRadius: "50%",
+                    width: "50px",
+                    height: "50px",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
+                }}>
+                <img src="/profile_pic.png" alt="A profile picture"
+                     style={{borderRadius: "50%", width: "50px", height: "50px"}}/>
             </button>
         );
     }
@@ -113,10 +123,11 @@ export default function Feed () {
                     alignItems: "center"
                 }}
             >
-                <img src="/profile_pic.png" alt="A profile picture" style={{ borderRadius: "50%", width: "50px", height: "50px" }} />
+                <img src="/profile_pic.png" alt="A profile picture"
+                     style={{borderRadius: "50%", width: "50px", height: "50px"}}/>
                 <p>{user_id}</p>
-                <button style={{ width: "100%", margin: "5px 0" }}>Settings</button>
-                <button style={{ width: "100%", margin: "5px 0" }} onClick={() => signOut()}>Log out</button>
+                <button style={{width: "100%", margin: "5px 0"}}>Settings</button>
+                <button style={{width: "100%", margin: "5px 0"}} onClick={() => signOut()}>Log out</button>
             </div>
         );
     });
@@ -130,7 +141,7 @@ export default function Feed () {
     }, []);
 
     useEffect(() => {
-        endOfNotes.current?.scrollIntoView({ behavior: "smooth" });
+        endOfNotes.current?.scrollIntoView({behavior: "smooth"});
     }, [list]);
 
     return (
@@ -142,8 +153,8 @@ export default function Feed () {
                     <button type="submit" id="post">Post Note</button>
                 </form>
             </div>
-            <div ref={endOfNotes} />
-            <ProfilePicButton onClick={() => setShowProfileCard(true)} />
+            <div ref={endOfNotes}/>
+            <ProfilePicButton onClick={() => setShowProfileCard(true)}/>
             {showProfileCard &&
                 <ProfileCard
                     ref={profileCardRef}
